@@ -1,0 +1,54 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+			name = "sonatype"
+			url = "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "1.7.10-2.0.22.7"
+group= "binnie"
+archivesBaseName = "binnie-mods"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.7.10-10.13.4.1614-1.7.10"
+	runDir = "eclipse"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.6-dev'
+	compile name: 'buildcraft-7.1.17-dev'
+	compile name: 'EJML-core-0.26'
+	compile name: 'industrialcraft-2-2.2.827-experimental-dev'
+	compile name: 'forestry_1.7.10-4.2.16.64-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

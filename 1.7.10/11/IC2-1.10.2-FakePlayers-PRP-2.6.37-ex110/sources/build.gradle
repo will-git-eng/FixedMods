@@ -1,0 +1,50 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+version = "2-2.6.37-ex110"
+group= "ic2"
+archivesBaseName = "industrialcraft"
+
+minecraft {
+	version = "1.10.2-12.18.1.2050"
+	runDir = "run"
+	mappings = "snapshot_20160518"
+}
+
+dependencies {
+	compile 'org.spongepowered:spongeapi:5.0.0-SNAPSHOT'
+	compile name: 'EJML-core-0.26'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'FMLCorePluginContainsFMLMod': 'true'
+		attributes 'FMLCorePlugin': 'ic2.core.coremod.IC2core'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

@@ -1,0 +1,48 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "2-2.8.111-ex112"
+group = "ic2"
+archivesBaseName = "industrialcraft"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.12.2-14.23.5.2775"
+	runDir = "run"
+	mappings = "snapshot_20171003"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.12.2-2.6.2-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

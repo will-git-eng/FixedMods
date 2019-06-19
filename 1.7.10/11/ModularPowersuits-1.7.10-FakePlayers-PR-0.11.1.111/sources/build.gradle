@@ -1,0 +1,67 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+			name = "sonatype"
+			url = "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "0.11.1.111"
+group= "machinemuse"
+archivesBaseName = "ModularPowersuits"
+
+minecraft {
+	version = "1.7.10-10.13.4.1614-1.7.10"
+	runDir = "eclipse"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.7-dev'
+	compile name: 'EJML-core-0.26'
+	compile name: 'CodeChickenLib-1.7.10-1.1.3.140-dev'
+	compile name: 'CodeChickenCore-1.7.10-1.0.4.29-dev'
+	compile name: 'NotEnoughItems-1.7.10-1.0.3.74-dev'
+	compile name: 'industrialcraft-2-2.2.827-experimental-dev'
+	compile name: 'appliedenergistics2-rv3-beta-6-dev'
+	compile name: 'buildcraft-7.1.20-dev'
+	compile name: 'CoFHCore-[1.7.10]3.1.4-329-dev'
+	compile name: 'EnderCore-1.7.10-0.2.0.36_beta-dev'
+	compile name: 'EnderIO-1.7.10-2.3.0.429_beta-dev'
+	compile name: 'forestry_1.7.10-4.2.16.64-dev'
+	compile name: 'Mekanism-1.7.10-9.1.0.281-dev'
+	compile name: 'Railcraft-1.7.10-9.12.2.0-dev'
+	compile name: 'QmunityLib-1.7.10-0.1.114-dev'
+	compile name: 'BluePower-1.7.10-0.2.962-dev'
+	compile name: 'MineFactoryReloaded-[1.7.10]2.8.1-174-dev'
+	compile name: 'ProjectRed-1.7.10-4.7.0pre8.92-Base'
+	compile name: 'Numina-0.4.1.105-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'FMLAT': 'numina_at.cfg'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

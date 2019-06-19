@@ -1,0 +1,48 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+			name = "sonatype"
+			url = "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "0.4.3A"
+group= "BigReactors"
+archivesBaseName = "BigReactors"
+
+minecraft {
+	version = "1.7.10-10.13.4.1614-1.7.10"
+	runDir = "eclipse"
+}
+
+dependencies {
+	compile name: 'CoFHCore-[1.7.10]3.1.4-329-dev'
+	compile name: 'ComputerCraft-1.74-dev'
+	//compile name: 'OpenComputers-MC1.7.10-1.5.14.30-dev'
+	compile name: 'MineFactoryReloaded-[1.7.10]2.8.1-174-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

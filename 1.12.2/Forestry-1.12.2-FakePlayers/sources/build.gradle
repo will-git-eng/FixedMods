@@ -1,0 +1,54 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "5.8.2.382"
+group= "forestry"
+archivesBaseName = "forestry_1.12.2"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.12.2-14.23.5.2775"
+	runDir = "run"
+	mappings = "snapshot_20171003"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.12.2-2.6-dev'
+	compile name: 'industrialcraft-2-2.8.109-ex112-dev'
+	compile name: 'jei_1.12.2-4.14.4.264-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'FMLAT': 'forestry_at.cfg'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

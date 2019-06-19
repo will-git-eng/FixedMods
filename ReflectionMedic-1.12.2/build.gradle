@@ -1,0 +1,64 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	maven {
+        name = 'spigot'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots'
+    }
+}
+
+version = "1.12.2-2.6.2"
+group= "ru.will.git"
+archivesBaseName = "reflectionmedic"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.12.2-14.23.5.2775"
+	runDir = "run"
+	mappings = "snapshot_20171003"
+	replace "@VERSION@", project.version
+}
+
+dependencies {
+	compile 'org.spongepowered:spongeapi:7.1.0'
+	compile 'org.bukkit:bukkit:1.12.2-R0.1-SNAPSHOT'
+}
+
+task devJar(type: Jar) {
+	classifier = 'dev'
+	from sourceSets.main.output
+}
+
+task sourcesJar(type: Jar) {
+	classifier = 'sources'
+	from sourceSets.main.allSource
+}
+
+artifacts {
+	archives devJar
+	archives sourcesJar
+}
+
+jar {
+	manifest {
+		attributes 'FMLCorePlugin': 'ru.will.git.reflectionmedic.coremod.CoreMod'
+		attributes 'FMLCorePluginContainsFMLMod': 'true'
+	}
+}

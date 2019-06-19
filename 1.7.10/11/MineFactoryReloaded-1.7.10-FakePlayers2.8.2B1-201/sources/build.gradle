@@ -1,0 +1,53 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "[1.7.10]2.8.2B1-201"
+group= "powercrystals"
+archivesBaseName = "MineFactoryReloaded"
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "eclipse"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.8-dev'
+	compile name: 'CoFHCore-[1.7.10]3.1.4-329-dev'
+	compile name: 'appliedenergistics2-rv3-beta-6-dev'
+	compile name: 'buildcraft-7.1.23-dev'
+	compile name: 'industrialcraft-2-2.2.827-experimental-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'CoFHAT': 'MFR_at.cfg'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

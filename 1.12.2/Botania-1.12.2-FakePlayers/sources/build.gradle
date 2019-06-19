@@ -1,0 +1,58 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "360"
+group = "botania"
+archivesBaseName = "Botania+r1.10"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.12.2-14.23.5.2775"
+	runDir = "run"
+	mappings = "stable_39"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.12.2-2.6.2-dev'
+	compile name: 'CTM-MC1.12.2-0.3.3.22-dev'
+	compile name: 'albedo-0.1.3-dev'
+	compile name: 'AutoRegLib-1.3-26-dev'
+	compile name: 'Quark-r1.5-146-dev'
+	compile name: 'Baubles-1.12-1.5.2-dev'
+	compile name: 'Thaumcraft-1.12.2-6.1.BETA26-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'FMLAT': 'botania_at.cfg'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}

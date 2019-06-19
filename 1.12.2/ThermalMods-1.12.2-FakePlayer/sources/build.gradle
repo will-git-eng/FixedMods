@@ -1,0 +1,51 @@
+buildscript {
+	repositories {
+		jcenter()
+		maven { url = "http://files.minecraftforge.net/maven" }
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT'
+	}
+}
+
+repositories {
+	maven {
+        name = 'sponge'
+        url = 'http://repo.spongepowered.org/maven'
+    }
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "1.12.2"
+group = "cofh"
+archivesBaseName = "ThermalMods"
+
+sourceCompatibility = targetCompatibility = '1.8'
+compileJava {
+	sourceCompatibility = targetCompatibility = '1.8'
+}
+
+minecraft {
+	version = "1.12.2-14.23.5.2775"
+	runDir = "run"
+	mappings = "snapshot_20171003"
+}
+
+dependencies {
+	compile name: 'reflectionmedic-1.12.2-2.6.2-dev'
+	compile name: 'Chameleon-1.12-4.1.3-dev'
+	compile name: 'StorageDrawers-1.12.1-5.3.3-dev'
+	compile name: 'theoneprobe-1.12-1.4.19-dev'
+	compile name: 'CodeChickenLib-1.12.2-3.2.2.353-dev'
+	compile name: 'CoFHCore-1.12.2-4.6.2.25-dev'
+	compile name: 'CoFHWorld-1.12.2-1.3.0.6-dev'
+	compile name: 'RedstoneFlux-1.12-2.1.0.6-dev'
+	compile name: 'ThermalFoundation-1.12.2-2.6.2.26-dev'
+	compile name: 'ThermalExpansion-1.12.2-5.5.3.41-dev'
+}

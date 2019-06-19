@@ -1,0 +1,62 @@
+buildscript {
+	repositories {
+		mavenCentral()
+		maven {
+			name = "forge"
+			url = "http://files.minecraftforge.net/maven"
+		}
+		maven {
+			name = "sonatype"
+			url = "https://oss.sonatype.org/content/repositories/snapshots/"
+		}
+	}
+	dependencies {
+		classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+	}
+}
+
+repositories {
+	flatDir {
+		dirs 'lib'
+	}
+}
+
+apply plugin: 'forge'
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+version = "rv3-beta-6"
+group= "appeng"
+archivesBaseName = "appliedenergistics2"
+
+minecraft {
+	version = "1.7.10-10.13.4.1614-1.7.10"
+	runDir = "eclipse"
+}
+
+dependencies {
+	compile name: 'bukkit-1.7.10'
+	compile name: 'reflectionmedic-1.7-dev'
+	compile name: 'CodeChickenLib-1.7.10-1.1.3.140-dev'
+	compile name: 'CodeChickenCore-1.7.10-1.0.7.47-dev'
+	compile name: 'NotEnoughItems-1.7.10-1.0.5.120-dev'
+	compile name: 'ForgeMultipart-1.7.10-1.2.0.347-dev'
+	compile name: 'Waila-1.5.10_1.7.10-dev'
+	compile name: 'CoFHCore-[1.7.10]3.1.0-323-dev'
+	compile name: 'industrialcraft-2-2.2.817-experimental-dev'
+	compile name: 'buildcraft-7.1.16-dev'
+	compile name: 'MekanismAPI-1.7.10-8.1.9.265-dev'
+	compile name: 'DragonAPI-1.7.10-V13b-dev'
+	compile name: 'RotaryCraftAPI-1.7.1-V13a-dev'
+	compile name: archivesBaseName + '-' + version + '-dev'
+}
+
+jar {
+	manifest {
+		attributes 'FMLCorePlugin': 'appeng.transformer.AppEngCore'
+		attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+
+	duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	from zipTree('lib/' + archivesBaseName + '-' + version + '.jar')
+}
